@@ -35,11 +35,7 @@ ENV KAFKA__PORT=9092 \
     KAFKA__ZOOKEEPER_CONNECT="localhost:2181" \
     KAFKA__ZOOKEEPER_CONNECTON_TIMEOUT_MS=6000 \
     KAFKA__GROUP_INITIAL_REBALANCE_DELAY_MS=0 \
-    KAFKA__JMX_OPTS="-Dcom.sun.management.jmxremote \
-                        -Dcom.sun.management.jmxremote.authenticate=false \
-                        -Dcom.sun.management.jmxremote.ssl=false \
-                        -Djava.rmi.server.hostname=127.0.0.1 \
-                        -Dcom.sun.management.jmxremote.rmi.port=1099"
+    KAFKA__JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=1099"
 
 # Container's Labels
 LABEL Description "Apache Kafka docker image" \
@@ -77,6 +73,10 @@ EXPOSE ${KAFKA__PORT}
 VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/data"]
 
 USER kafka
+
+COPY kafka-docker-entrypoint.sh ${KAFKA_HOME}/bin/ \
+    && chown -R kafka.kafka /opt
+
 WORKDIR /opt/kafka
 
 # Default command to run on boot
