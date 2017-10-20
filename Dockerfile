@@ -3,7 +3,7 @@ FROM openjdk:8-jre-alpine
 MAINTAINER Christian González <christiangda@gmail.com>
 
 # Arguments from docker build proccess
-ARG SCALA_MIRROR
+ARG SCALA_VERSION
 ARG KAFKA_DOWNLOAD_MIRROR
 ARG KAFKA_VERSION
 
@@ -22,20 +22,22 @@ LABEL Build "docker build --no-cache --rm \
             --build-arg SCALA_VERSION=2.11 \
             --build-arg KAFKA_VERSION=0.11.0.1 \
             --build-arg KAFKA_DOWNLOAD_MIRROR=http://apache.mirrors.pair.com \
-            --tag christiangda/kafka:3.4.9 \
+            --tag christiangda/kafka:2.11-0.11.0.1 \
             --tag christiangda/kafka:latest \
             --tag christiangda/kafka:canary ." \
-      Run "docker run --rm -ti -h "kafka-01" christiangda/kafka" \
+      Run "docker run --rm -t -i -h "kafka-01" christiangda/kafka" \
       Connect "docker exec -ti <container id from 'docker ps' command> /bin/bash"
 
-# Update and install
-RUN apk --no-cache --update add wget bash \
-    && mkdir /opt \
-    && wget -q -O - $KAFKA_DOWNLOAD_MIRROR/kafka/$KAFKA_VERSION/kafka_$SCALA_VERSION-$KAFKA_VERSION.tgz | tar -xzf - -C /opt \
-    && mv /opt/kafka_$SCALA_VERSION-$KAFKA_VERSION /opt/kafka \
-    && rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
+RUN addgroup -g 1000 kafka \
+    && mkdir -p /opt/kafka \
+    && adduser -u 1000 -S -D -G kafka -h /opt/kafka -s /sbin/nologin -g "Kafka user" kafka \
+    && chmod 755 /opt/kafka \
+    && chown -R kafka.kafka /opt/kafka
 
-RUN mkdir -p /var/log/kafka
+RUN apk --no-cache --update add wget bash \
+    && wget -q -O - "$KAFKA_DOWNLOAD_MIRROR"/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz | tar -xzf - -C /opt/kafka --strip 1 \
+    && chown -R kafka.kafka /opt \
+    && rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
 # Environment variables
 ENV container docker
@@ -46,9 +48,10 @@ ENV KAFKA_LOG_DIRS "/var/log/kafka"
 # Exposed ports
 EXPOSE 2181 9092
 
+VOLUME ["/opt/kafka/config"]
+
+USER kafka
 WORKDIR /opt/kafka
 
-VOLUME ["/opt/kafka/conf"]
-
-ENTRYPOINT ["kafka_docker.sh"]
-CMD ["start-foreground"]
+# Default command to run on boot
+CMD ["bin/kafka-server-start.sh", "config/server.properties"]
