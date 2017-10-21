@@ -8,16 +8,19 @@ ARG KAFKA_DOWNLOAD_MIRROR
 ARG KAFKA_VERSION
 
 # Environment variables
-ENV container docker
-ENV SCALA_VERSION ${SCALA_VERSION:-2.11}
-ENV KAFKA_VERSION ${KAFKA_VERSION:-0.11.0.1}
-ENV KAFKA_DOWNLOAD_MIRROR ${KAFKA_DOWNLOAD_MIRROR:-http://apache.mirrors.pair.com}
-ENV KAFKA_HOME "/opt/kafka"
-ENV PATH $KAFKA_HOME/bin:$PATH
+ENV container=docker \
+    SCALA_VERSION=${SCALA_VERSION:-2.11} \
+    KAFKA_VERSION=${KAFKA_VERSION:-0.11.0.1} \
+    KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-http://apache.mirrors.pair.com} \
+    KAFKA_HOME="/opt/kafka" \
+    KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=1099" \
+    KAFKA_DATA_PATH="/opt/kafka/data" \
+    KAFKA_PORT=9092
 
-ENV KAFKA__PORT=9092 \
-    KAFKA__DATA_PATH="/opt/kafka/data" \
-    KAFKA__BROKER_ID=0 \
+ENV PATH=$KAFKA_HOME/bin:$PATH
+
+# https://kafka.apache.org/documentation/#configuration
+ENV KAFKA__BROKER_ID=0 \
     KAFKA__NUM_NETWORK_THREADS=3 \
     KAFKA__NUM_IO_THREADS=8 \
     KAFKA__SOCKET_SEND_BUFFER_BYTES=102400 \
@@ -34,8 +37,7 @@ ENV KAFKA__PORT=9092 \
     KAFKA__LOG_RETENTION_CHECK_INTERVAL_MS=300000 \
     KAFKA__ZOOKEEPER_CONNECT="localhost:2181" \
     KAFKA__ZOOKEEPER_CONNECTON_TIMEOUT_MS=6000 \
-    KAFKA__GROUP_INITIAL_REBALANCE_DELAY_MS=0 \
-    KAFKA__JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=1099"
+    KAFKA__GROUP_INITIAL_REBALANCE_DELAY_MS=0
 
 # Container's Labels
 LABEL Description "Apache Kafka docker image" \
@@ -55,12 +57,15 @@ LABEL Build "docker build --no-cache --rm \
 
 # Create service's user
 RUN addgroup -g 1000 kafka \
-    && mkdir -p ${KAFKA_HOME} \
+    && mkdir -p ${KAFKA_HOME}/bin \
     && adduser -u 1000 -S -D -G kafka -h ${KAFKA_HOME} -s /sbin/nologin -g "Kafka user" kafka \
     && chmod 755 ${KAFKA_HOME} \
     && mkdir -p ${KAFKA__LOG_DIRS} \
-    && mkdir -p ${KAFKA__DATA_PATH} \
+    && mkdir -p ${KAFKA_DATA_PATH} \
     && chown -R kafka.kafka ${KAFKA_HOME}
+
+COPY kafka-docker-cmd.sh ${KAFKA_HOME}/bin/
+RUN chmod +x ${KAFKA_HOME}/bin/kafka-docker-cmd.sh
 
 RUN apk --no-cache --update add wget bash \
     && wget -q -O - "${KAFKA_DOWNLOAD_MIRROR}"/kafka/"${KAFKA_VERSION}"/kafka_"${SCALA_VERSION}"-"${KAFKA_VERSION}".tgz | tar -xzf - -C ${KAFKA_HOME} --strip 1 \
@@ -73,9 +78,6 @@ EXPOSE ${KAFKA__PORT}
 VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/data"]
 
 USER kafka
-
-COPY kafka-docker-entrypoint.sh ${KAFKA_HOME}/bin/ \
-    && chown -R kafka.kafka /opt
 
 WORKDIR /opt/kafka
 
