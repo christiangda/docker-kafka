@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-#
 # eval "declare -a array=$(get_env_vars_from_prefix 'KAFKA__')"
 # echo ${array[2]}
 # Thank you: Steve Zobell https://stackoverflow.com/questions/10582763/how-to-return-an-array-in-bash-without-using-globals/16843375#16843375
@@ -21,7 +20,6 @@ function env_line_to_yaml_line {
   echo ${new_line}
 }
 
-#
 # eval "declare -a array=$(env_array_to_yaml_array ${some_array[@]})"
 # echo ${array[2]}
 function env_array_to_yaml_array {

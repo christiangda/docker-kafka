@@ -11,13 +11,11 @@ ARG KAFKA_VERSION
 ENV container=docker \
     SCALA_VERSION=${SCALA_VERSION:-2.11} \
     KAFKA_VERSION=${KAFKA_VERSION:-0.11.0.1} \
-    KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-http://apache.mirrors.pair.com} \
+    KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-"https://dist.apache.org/repos/dist/release/kafka"} \
     KAFKA_HOME="/opt/kafka" \
     KAFKA_DATA_PATH="/opt/kafka/data" \
-    KAFKA__LOG_DIRS="/opt/kafka/logs" \
-    KAFKA__PORT=9092
-
-ENV PATH=$KAFKA_HOME/bin:$PATH
+    KAFKA_LOG_DIRS="/opt/kafka/logs" \
+    KAFKA_PORT=9092
 
 # Container's Labels
 LABEL Description "Apache Kafka docker image" \
@@ -28,7 +26,6 @@ LABEL Description "Apache Kafka docker image" \
 LABEL Build "docker build --no-cache --rm \
             --build-arg SCALA_VERSION=2.11 \
             --build-arg KAFKA_VERSION=0.11.0.1 \
-            --build-arg KAFKA_DOWNLOAD_MIRROR=http://apache.mirrors.pair.com \
             --tag christiangda/kafka:2.11-0.11.0.1 \
             --tag christiangda/kafka:latest \
             --tag christiangda/kafka:canary ." \
@@ -40,30 +37,44 @@ RUN addgroup -g 1000 kafka \
     && mkdir -p ${KAFKA_HOME}/bin \
     && adduser -u 1000 -S -D -G kafka -h ${KAFKA_HOME} -s /sbin/nologin -g "Kafka user" kafka \
     && chmod 755 ${KAFKA_HOME} \
-    && mkdir -p ${KAFKA__LOG_DIRS} \
+    && mkdir -p ${KAFKA_LOG_DIRS} \
     && mkdir -p ${KAFKA_DATA_PATH} \
     && mkdir -p ${KAFKA_HOME}/provisioning \
     && chown -R kafka.kafka ${KAFKA_HOME}
 
-COPY kafka-docker-cmd.sh ${KAFKA_HOME}/bin/
+# Copy provisioning files
 COPY provisioning/* ${KAFKA_HOME}/provisioning/
+RUN chmod +x ${KAFKA_HOME}/provisioning/*.sh
 
-RUN apk --no-cache --update add wget bash \
-    && wget -q -O - "${KAFKA_DOWNLOAD_MIRROR}"/kafka/"${KAFKA_VERSION}"/kafka_"${SCALA_VERSION}"-"${KAFKA_VERSION}".tgz | tar -xzf - -C ${KAFKA_HOME} --strip 1 \
+# Download artifact and sign
+#ADD ${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz ${KAFKA_HOME}
+#ADD ${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka-${KAFKA_VERSION}-src.tgz.asc ${KAFKA_HOME}
+
+#RUN gpg --verify
+RUN apk --no-cache --update add wget bash gnupg \
+    && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" \
+    && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz.md5" \
+    && echo "#### START VERIFY CHECKSUM ####" \
+    && gpg --print-md MD5 "kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" 2>/dev/null && cat "kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz.md5" \
+    && echo "#### END VERIFY CHECKSUM ####" \
+    && tar -xv -C ${KAFKA_HOME} --strip-components=1 -f "kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" \
+    && rm -rf "kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz*" \
     && chown -R kafka.kafka /opt \
     && rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
-RUN chmod +x ${KAFKA_HOME}/bin/kafka-docker-cmd.sh \
-    && chmod +x ${KAFKA_HOME}/provisioning/*.sh \
-    && ${KAFKA_HOME}/provisioning/server-properties.sh
+# Set the PATH
+ENV PATH=$KAFKA_HOME/bin:$PATH
 
 # Exposed ports
-EXPOSE ${KAFKA__PORT}
+EXPOSE ${KAFKA_PORT}
 
 VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/data"]
 
 USER kafka
 WORKDIR /opt/kafka
+
+# Force any command provision the container
+ENTRYPOINT ["provisioning/docker-entrypoint.sh"]
 
 # Default command to run on boot
 CMD ["bin/kafka-server-start.sh", "config/server.properties"]
