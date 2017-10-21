@@ -15,7 +15,8 @@ ENV container=docker \
     KAFKA_HOME="/opt/kafka" \
     KAFKA_DATA_PATH="/opt/kafka/data" \
     KAFKA_LOG_DIRS="/opt/kafka/logs" \
-    KAFKA_PORT=9092
+    KAFKA_PORT=9092 \
+    ZOOKEEPER_PORT=2181
 
 # Container's Labels
 LABEL Description "Apache Kafka docker image" \
@@ -66,7 +67,7 @@ RUN apk --no-cache --update add wget bash gnupg \
 ENV PATH=$KAFKA_HOME/bin:$PATH
 
 # Exposed ports
-EXPOSE ${KAFKA_PORT}
+EXPOSE ${KAFKA_PORT} ${ZOOKEEPER_PORT}
 
 VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/data"]
 
