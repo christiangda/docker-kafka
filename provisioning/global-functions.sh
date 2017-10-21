@@ -35,6 +35,13 @@ function env_array_to_yaml_array {
   declare -p output | sed -e 's/^declare -a [^=]*=//'
 }
 
+#
+function write_to_file {
+  local line=$1
+  local file=$2
+  echo "$line" >> $file
+}
+
 # some test
 #eval "declare -a array_one=$(get_env_vars_from_prefix 'KAFKA__')"
 #echo "Global var 2 is: ${array_one[2]}"
