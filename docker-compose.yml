@@ -1,0 +1,26 @@
+version: "3"
+services:
+  zookeeper:
+    image: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - kafka-net
+  kafka:
+    image: christiangda/kafka:2.11-0.11.0.1
+    environment:
+      - KAFKA__ZOOKEEPER_CONNECT=zookeeper-01:2181
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9092:9092"
+    networks:
+      - kafka-net
+networks:
+  kafka-net:

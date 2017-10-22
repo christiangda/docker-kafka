@@ -11,7 +11,7 @@ function get_env_vars_from_prefix {
 }
 
 # MY_CONF_KEY=MY_VALUE --> my.conf.key=MY_VALUE
-function env_line_to_yaml_line {
+function env_line_to_prop_line {
   local line=$1
   local key=${line%=*}
   local value=${line#*=}
@@ -20,14 +20,14 @@ function env_line_to_yaml_line {
   echo ${new_line}
 }
 
-# eval "declare -a array=$(env_array_to_yaml_array ${some_array[@]})"
+# eval "declare -a array=$(env_array_to_prop_array ${some_array[@]})"
 # echo ${array[2]}
-function env_array_to_yaml_array {
+function env_array_to_prop_array {
   local input=($@)
   local output=()
   local i=0
   for element in "${input[@]}"; do
-    output[$i]=$(env_line_to_yaml_line $element)
+    output[$i]=$(env_line_to_prop_line $element)
     let i+=1
   done
   declare -p output | sed -e 's/^declare -a [^=]*=//'
@@ -43,5 +43,5 @@ function write_to_file {
 # some test
 #eval "declare -a array_one=$(get_env_vars_from_prefix 'KAFKA__')"
 #echo "Global var 2 is: ${array_one[2]}"
-#eval "declare -a array_two=$(env_array_to_yaml_array ${array_one[@]})"
+#eval "declare -a array_two=$(env_array_to_prop_array ${array_one[@]})"
 #echo "Global var 2 is: ${array_two[2]}"

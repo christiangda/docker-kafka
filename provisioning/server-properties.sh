@@ -42,18 +42,17 @@ source ${KAFKA_HOME}/provisioning/global-functions.sh
 eval "declare -a SERVER_ENV_VARS=$(get_env_vars_from_prefix ${KAFKA_SERVER_ENV_CONFIG_PREFIX})"
 #echo ${SERVER_ENV_VARS[0]}
 
-# convert array content to yaml array content
-eval "declare -a SERVER_YAML_VARS=$(env_array_to_yaml_array ${SERVER_ENV_VARS[@]})"
-# echo ${SERVER_YAML_VARS[0]}
+# convert array content to prop array content
+eval "declare -a SERVER_prop_VARS=$(env_array_to_prop_array ${SERVER_ENV_VARS[@]})"
+# echo ${SERVER_prop_VARS[0]}
 
 #
 if [ -f $KAFKA_SERVER_CONFIG_FILE ]; then
   mv $KAFKA_SERVER_CONFIG_FILE $KAFKA_SERVER_CONFIG_FILE.backup
-  echo "---" > $KAFKA_SERVER_CONFIG_FILE
   echo "#### FILE MANAGED BY server-properties.sh SCRIPT ####" >> $KAFKA_SERVER_CONFIG_FILE
 fi
 
 # write all environments variables to config file
-for line in "${SERVER_YAML_VARS[@]}"; do
+for line in "${SERVER_prop_VARS[@]}"; do
   write_to_file $line $KAFKA_SERVER_CONFIG_FILE
 done

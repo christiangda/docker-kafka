@@ -16,7 +16,7 @@ ENV container=docker \
     KAFKA_DATA_PATH="/opt/kafka/data" \
     KAFKA_LOG_DIRS="/opt/kafka/logs" \
     KAFKA_PORT=9092 \
-    ZOOKEEPER_PORT=2181
+    INTERNAL_ZOOKEEPER_PORT=2181
 
 # Container's Labels
 LABEL Description "Apache Kafka docker image" \
@@ -47,11 +47,6 @@ RUN addgroup -g 1000 kafka \
 COPY provisioning/* ${KAFKA_HOME}/provisioning/
 RUN chmod +x ${KAFKA_HOME}/provisioning/*.sh
 
-# Download artifact and sign
-#ADD ${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz ${KAFKA_HOME}
-#ADD ${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka-${KAFKA_VERSION}-src.tgz.asc ${KAFKA_HOME}
-
-#RUN gpg --verify
 RUN apk --no-cache --update add wget bash gnupg \
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" \
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz.md5" \
@@ -67,7 +62,7 @@ RUN apk --no-cache --update add wget bash gnupg \
 ENV PATH=$KAFKA_HOME/bin:$PATH
 
 # Exposed ports
-EXPOSE ${KAFKA_PORT} ${ZOOKEEPER_PORT}
+EXPOSE ${KAFKA_PORT} ${INTERNAL_ZOOKEEPER_PORT}
 
 VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/data"]
 

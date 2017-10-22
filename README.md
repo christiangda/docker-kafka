@@ -37,3 +37,10 @@ docker run --rm \
   --env "KAFKA__ZOOKEEPER_CONNECT=127.0.0.1:2181" \
   christiangda/kafka bin/kafka-server-start.sh config/server.properties
 ```
+
+Using docker machine+swarm
+```bash
+docker stack deploy -c docker-compose.yml kafka-cluster
+docker stack ps spark-cluster
+docker stack rm kafka-cluster
+```
