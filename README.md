@@ -8,9 +8,19 @@ docker pull christiangda/kafka
 
 ### see config files provisioned
 
+using the internal zookeeper daemon
+```bash
+docker run --tty --interactive --rm \
+  --name kafka
+  --publish 9092:9092 \
+  --publish 2181:2181 \
+  christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
+```
+
 Default configuration
 ```bash
 docker run -t -i --rm -p 9092:9092 christiangda/kafka cat config/server.properties
+docker run -t -i --rm -p 9092:9092 christiangda/kafka bin/kafka-server-start.sh config/server.properties
 ```
 
 When you want to check if your env var finish in the config file
