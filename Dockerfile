@@ -30,8 +30,8 @@ LABEL Build "docker build --no-cache --rm \
             --tag christiangda/kafka:2.11-0.11.0.1 \
             --tag christiangda/kafka:latest \
             --tag christiangda/kafka:canary ." \
-      Run "docker run --rm -t -i -h "kafka-01" christiangda/kafka" \
-      Connect "docker exec -ti <container id from 'docker ps' command> /bin/bash"
+      Run "docker run --tty --interactive --rm --name "kafka-01" christiangda/kafka" \
+      Connect "docker exec --tty --interactive <container id from 'docker ps' command> /bin/bash"
 
 # Create service's user
 RUN addgroup -g 1000 kafka \

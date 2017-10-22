@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# eval "declare -a array=$(get_env_vars_from_prefix 'KAFKA__')"
+# eval "declare -a array=$(get_env_vars_from_prefix 'SERVER__')"
 # echo ${array[2]}
 # Thank you: Steve Zobell https://stackoverflow.com/questions/10582763/how-to-return-an-array-in-bash-without-using-globals/16843375#16843375
 function get_env_vars_from_prefix {
@@ -41,7 +41,7 @@ function write_to_file {
 }
 
 # some test
-#eval "declare -a array_one=$(get_env_vars_from_prefix 'KAFKA__')"
+#eval "declare -a array_one=$(get_env_vars_from_prefix 'SERVER__')"
 #echo "Global var 2 is: ${array_one[2]}"
 #eval "declare -a array_two=$(env_array_to_prop_array ${array_one[@]})"
 #echo "Global var 2 is: ${array_two[2]}"

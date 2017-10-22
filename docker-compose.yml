@@ -9,7 +9,7 @@ services:
   kafka:
     image: christiangda/kafka:2.11-0.11.0.1
     environment:
-      - KAFKA__ZOOKEEPER_CONNECT=zookeeper-01:2181
+      - SERVER__ZOOKEEPER_CONNECT=zookeeper-01:2181
     deploy:
       replicas: 1
       resources:
