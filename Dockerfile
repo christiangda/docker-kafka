@@ -13,7 +13,6 @@ ENV container=docker \
     KAFKA_VERSION=${KAFKA_VERSION:-0.11.0.1} \
     KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-"https://dist.apache.org/repos/dist/release/kafka"} \
     KAFKA_HOME="/opt/kafka" \
-    KAFKA_DATA_PATH="/opt/kafka/data" \
     KAFKA_LOG_DIRS="/opt/kafka/logs" \
     KAFKA_PORT=9092 \
     INTERNAL_ZOOKEEPER_PORT=2181
@@ -39,7 +38,6 @@ RUN addgroup -g 1000 kafka \
     && adduser -u 1000 -S -D -G kafka -h ${KAFKA_HOME} -s /sbin/nologin -g "Kafka user" kafka \
     && chmod 755 ${KAFKA_HOME} \
     && mkdir -p ${KAFKA_LOG_DIRS} \
-    && mkdir -p ${KAFKA_DATA_PATH} \
     && mkdir -p ${KAFKA_HOME}/provisioning \
     && chown -R kafka.kafka ${KAFKA_HOME}
 
@@ -47,7 +45,7 @@ RUN addgroup -g 1000 kafka \
 COPY provisioning/* ${KAFKA_HOME}/provisioning/
 RUN chmod +x ${KAFKA_HOME}/provisioning/*.sh
 
-RUN apk --no-cache --update add wget bash gnupg \
+RUN apk --no-cache --update add wget bash gnupg krb5-libs\
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" \
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz.md5" \
     && echo "#### START VERIFY CHECKSUM ####" \
