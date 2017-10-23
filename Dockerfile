@@ -15,7 +15,9 @@ ENV container=docker \
     KAFKA_HOME="/opt/kafka" \
     KAFKA_LOG_DIRS="/opt/kafka/logs" \
     KAFKA_PORT=9092 \
-    INTERNAL_ZOOKEEPER_PORT=2181
+    INTERNAL_ZOOKEEPER_PORT=2181 \
+    INTERNAL_ZOOKEEPER_LOGS_PATH="/opt/kafka/zookeeper/logs" \
+    INTERNAL_ZOOKEEPER_DATA_PATH="/opt/kafka/zookeeper/data"
 
 # Container's Labels
 LABEL Description "Apache Kafka docker image" \
@@ -30,7 +32,7 @@ LABEL Build "docker build --no-cache --rm \
             --tag christiangda/kafka:latest \
             --tag christiangda/kafka:canary ." \
       Run "docker run --tty --interactive --rm --name "kafka-01" christiangda/kafka" \
-      Connect "docker exec --tty --interactive <container id from 'docker ps' command> /bin/bash"
+      Connect "docker exec --tty --interactive <container id from 'doclogsker ps' command> /bin/bash"
 
 # Create service's user
 RUN addgroup -g 1000 kafka \
@@ -38,6 +40,8 @@ RUN addgroup -g 1000 kafka \
     && adduser -u 1000 -S -D -G kafka -h ${KAFKA_HOME} -s /sbin/nologin -g "Kafka user" kafka \
     && chmod 755 ${KAFKA_HOME} \
     && mkdir -p ${KAFKA_LOG_DIRS} \
+    && mkdir -p ${INTERNAL_ZOOKEEPER_LOGS_PATH} \
+    && mkdir -p ${INTERNAL_ZOOKEEPER_DATA_PATH} \
     && mkdir -p ${KAFKA_HOME}/provisioning \
     && chown -R kafka.kafka ${KAFKA_HOME}
 
@@ -62,7 +66,7 @@ ENV PATH=$KAFKA_HOME/bin:$PATH
 # Exposed ports
 EXPOSE ${KAFKA_PORT} ${INTERNAL_ZOOKEEPER_PORT}
 
-VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/data"]
+VOLUME ["/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/zookeeper/logs"]
 
 USER kafka
 WORKDIR /opt/kafka

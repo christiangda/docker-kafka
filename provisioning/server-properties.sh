@@ -29,7 +29,9 @@ export SERVER__GROUP_INITIAL_REBALANCE_DELAY_MS=${SERVER__GROUP_INITIAL_REBALANC
 
 ################################################################################
 # fixed parameters, don't take it from --env arguments
+export SERVER__LOG_DIR=${KAFKA_LOG_DIR:-"/opt/kafka/logs"}
 export SERVER__LOG_DIRS=${KAFKA_LOG_DIRS:-"/opt/kafka/logs"}
+export SERVER__SASL_KERBEROS_KINIT_CMD="/usr/bin/kinit"
 
 ################################################################################
 # importing utilities
