@@ -45,7 +45,7 @@ RUN addgroup -g 1000 kafka \
 COPY provisioning/* ${KAFKA_HOME}/provisioning/
 RUN chmod +x ${KAFKA_HOME}/provisioning/*.sh
 
-RUN apk --no-cache --update add wget bash gnupg krb5-libs\
+RUN apk --no-cache --update add wget bash gnupg krb5 krb5-libs\
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" \
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz.md5" \
     && echo "#### START VERIFY CHECKSUM ####" \
