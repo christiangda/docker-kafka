@@ -1,26 +1,75 @@
 version: "3"
 services:
-  zookeeper:
+
+  zk-01:
     image: zookeeper
     ports:
       - "2181:2181"
     networks:
       - kafka-net
-  kafka:
-    image: christiangda/kafka:2.11-0.11.0.1
-    environment:
-      - SERVER__ZOOKEEPER_CONNECT=zookeeper-01:2181
     deploy:
-      replicas: 1
       resources:
         limits:
-          cpus: "0.3"
+          cpus: "0.1"
           memory: 1024M
       restart_policy:
         condition: on-failure
+
+  kafka-01:
+    image: christiangda/kafka:2.11-0.11.0.1
+    depends_on:
+      - zk-01
+    environment:
+      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__BROKER_ID=-1
     ports:
       - "9092:9092"
     networks:
       - kafka-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+
+  kafka-02:
+    image: christiangda/kafka:2.11-0.11.0.1
+    depends_on:
+      - zk-01
+    environment:
+      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__BROKER_ID=-1
+    ports:
+      - "9093:9092"
+    networks:
+      - kafka-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+
+  kafka-03:
+    image: christiangda/kafka:2.11-0.11.0.1
+    depends_on:
+      - zk-01
+    environment:
+      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__BROKER_ID=-1
+    ports:
+      - "9094:9092"
+    networks:
+      - kafka-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
 networks:
   kafka-net:
