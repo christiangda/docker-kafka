@@ -15,6 +15,72 @@ docker run --tty --interactive --rm \
   --publish 9092:9092 \
   --publish 2181:2181 \
   christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
+
+docker run --tty --interactive --rm \
+  --name client \
+  --link kafka \
+  christiangda/kafka bin/kafka-topics.sh --create --zookeeper kafka:2181 --replication-factor 1 --partitions 1 --topic test
+
+docker run --tty --interactive --rm \
+  --name client \
+  --link kafka \
+  christiangda/kafka bin/kafka-topics.sh --list --zookeeper kafka:2181
+
+docker run --tty --interactive --rm \
+  --name client \
+  --link kafka \
+  christiangda/kafka bin/kafka-console-producer.sh --broker-list kafka:9092 --topic test
+
+docker run --tty --interactive --rm \
+  --name client \
+  --link kafka \
+  christiangda/kafka bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic test --from-beginning
+```
+
+Multi-Broker
+```bash
+docker run --tty --interactive --rm \
+  --name zk-01 \
+  --publish 2181:2181 \
+  zookeeper
+
+docker run --tty --interactive --rm \
+  --name kafka-01 \
+  --publish 9092:9092 \
+  --env SERVER__ZOOKEEPER_CONNECT=zk-01 \
+  --env SERVER__BROKER_ID=1 \
+  --link zk-01 \
+  christiangda/kafka bin/kafka-server-start.sh config/server.properties
+
+docker run --tty --interactive --rm \
+  --name kafka-02 \
+  --publish 9093:9092 \
+  --env SERVER__ZOOKEEPER_CONNECT=zk-01 \
+  --env SERVER__BROKER_ID=2 \
+  --link zk-01 \
+  --link kafka-01 \
+  christiangda/kafka bin/kafka-server-start.sh config/server.properties  
+
+docker run --tty --interactive --rm \
+  --name kafka-03 \
+  --publish 9094:9092 \
+  --env SERVER__ZOOKEEPER_CONNECT=zk-01 \
+  --env SERVER__BROKER_ID=3 \
+  --link zk-01 \
+  --link kafka-01 \
+  --link kafka-02 \
+  christiangda/kafka bin/kafka-server-start.sh config/server.properties  
+
+docker run --tty --interactive --rm \
+  --name client \
+  --link zk-01 \
+  christiangda/kafka bin/kafka-topics.sh --create --zookeeper zk-01:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topic
+
+docker run --tty --interactive --rm \
+  --name client \
+  --link zk-01 \
+  christiangda/kafka bin/kafka-topics.sh --describe --zookeeper zk-01:2181 --topic my-replicated-topic
+
 ```
 
 Default configuration
