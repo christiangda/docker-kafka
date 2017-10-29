@@ -21,6 +21,7 @@ services:
       - zk-01
     environment:
       - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__ZOOKEEPER_CONNECTION_TIMEOUT_MS=10000
       - SERVER__BROKER_ID=-1
     ports:
       - "9092:9092"
@@ -40,6 +41,7 @@ services:
       - zk-01
     environment:
       - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__ZOOKEEPER_CONNECTION_TIMEOUT_MS=10000
       - SERVER__BROKER_ID=-1
     ports:
       - "9093:9092"
@@ -53,15 +55,10 @@ services:
       restart_policy:
         condition: on-failure
 
-  kafka-03:
+  edge-node:
     image: christiangda/kafka:2.11-0.11.0.1
     depends_on:
       - zk-01
-    environment:
-      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
-      - SERVER__BROKER_ID=-1
-    ports:
-      - "9094:9092"
     networks:
       - kafka-net
     deploy:

@@ -6,8 +6,19 @@ Just another Apache Kafka docker image
 docker pull christiangda/kafka
 ```
 
-### see config files provisioned
+# How to run
 
+## Using its internal Apache Zookeeper
+
+```bash
+docker run --tty --interactive --rm \
+  --name kafka \
+  --publish 9092:9092 \
+  --publish 2181:2181 \
+  christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
+```
+
+### see config files provisioned
 using the internal zookeeper daemon
 ```bash
 docker run --tty --interactive --rm \
