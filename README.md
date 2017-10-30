@@ -1,6 +1,8 @@
 # docker-kafka
 Just another Apache Kafka docker image
 
+Docs: Work in Progress (WIP)!
+
 ### Download
 ```bash
 docker pull christiangda/kafka
