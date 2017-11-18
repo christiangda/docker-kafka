@@ -1,14 +1,47 @@
 # docker-kafka
+
 Just another Apache Kafka docker image
+
+[Dockerhub repo](https://hub.docker.com/r/christiangda/kafka/)
+[Github repo](https://github.com/christiangda/docker-kafka)
 
 Docs: Work in Progress (WIP)!
 
-### Download
+### Table of Contents
+
+1. [Description - What the container does and why it is useful](#description)
+2. [Setup - The basics of getting started with this docker image](#setup)
+    * [Setup requirements](#setup-requirements)
+    * [Beginning with this Container](#beginning-with-this-container)
+3. [Usage - Configuration options and additional functionality](#usage)
+4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+6. [Development - Guide for contributing to the module](#development)
+7. [Authors - Who is contributing to does it](#authors)
+8. [License](#license)
+
+# Description
+
+# Setup
+
+## Setup Requirements
+
+Download
+
 ```bash
 docker pull christiangda/kafka
 ```
 
-# How to run
+## Beginning with this container
+
+```bash
+docker run --tty --interactive --rm \
+  --name kafka \
+  --publish 9092:9092 \
+  --publish 2181:2181 \
+  christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
+```
+
+# Usage
 
 ## Using its internal Apache Zookeeper
 
@@ -72,7 +105,7 @@ docker run --tty --interactive --rm \
   --env SERVER__BROKER_ID=2 \
   --link zk-01 \
   --link kafka-01 \
-  christiangda/kafka bin/kafka-server-start.sh config/server.properties  
+  christiangda/kafka bin/kafka-server-start.sh config/server.properties
 
 docker run --tty --interactive --rm \
   --name kafka-03 \
@@ -82,7 +115,7 @@ docker run --tty --interactive --rm \
   --link zk-01 \
   --link kafka-01 \
   --link kafka-02 \
-  christiangda/kafka bin/kafka-server-start.sh config/server.properties  
+  christiangda/kafka bin/kafka-server-start.sh config/server.properties
 
 docker run --tty --interactive --rm \
   --name client \
@@ -134,3 +167,38 @@ docker stack deploy -c docker-compose.yml kafka-cluster
 docker stack ps spark-cluster
 docker stack rm kafka-cluster
 ```
+
+# Development
+
+If you want to cooperate with this project, please visit [my Github Repo](https://github.com/christiangda/docker-kafka) and fork it, then made your own
+chagest and prepare a git pull request
+
+To build this container, you can execute the following command
+
+```script
+git clone https://github.com/christiangda/docker-kafka
+cd docker-kafka/
+docker build --no-cache --rm --tag <your name>/storm
+```
+
+the parametrized's procedure is
+```script
+git clone https://github.com/christiangda/docker-kafka
+cd docker-kafka/
+docker build --no-cache --rm \
+            --build-arg SCALA_VERSION=2.11 \
+            --build-arg KAFKA_VERSION=0.11.0.1 \
+            --tag <your name>/kafka:2.11-0.11.0.1 \
+            --tag <your name>/kafka:latest .
+```
+
+# Authors
+
+[Christian González](https://github.com/christiangda)
+
+
+## License
+
+This module is released under the Apache License Version 2.0:
+
+* [http://www.apache.org/licenses/LICENSE-2.0.html](http://www.apache.org/licenses/LICENSE-2.0.html)
