@@ -1,6 +1,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/christiangda/kafka.svg)](https://hub.docker.com/r/christiangda/kafka/)
 [![Docker Stars](https://img.shields.io/docker/stars/christiangda/kafka.svg)](https://hub.docker.com/r/christiangda/kafka/)
-[![](https://badge.imagelayers.io/christiangda/kafka:latest.svg)](https://imagelayers.io/?images=christiangda/kafka:latest)
+[![](https://images.microbadger.com/badges/version/christiangda/kafka.svg)](https://microbadger.com/images/christiangda/kafka "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/christiangda/kafka.svg)](https://microbadger.com/images/christiangda/kafka "Get your own image badge on microbadger.com")
 
 # docker-kafka
 
@@ -21,6 +22,10 @@ docker run --tty --interactive --rm --name kafka \
   christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
 ```
 
+special first argument `WITH_INTERNAL_ZOOKEEPER` **is necessary to start internal** [Zookeeper Server](https://zookeeper.apache.org/) server, **this configuration is not recommended for production environments!**.
+
+**For productive environments continue reading the documentation!.**
+
 Docs: Work in Progress (WIP)!
 
 # Table of Contents
@@ -33,6 +38,7 @@ Docs: Work in Progress (WIP)!
     - [Ports](#ports)
     - [Volumes](#volumes)
 4. [Special Environments Variables](#special-evironments-variables)
+    - [Configuration Parameters](#configuration-parameters)
     - [Java Heap](#java-heap)
     - [Java JMX](#java-jmx)
 5. [Setup - The basics of getting started with this docker image](#setup)
@@ -48,7 +54,7 @@ Docs: Work in Progress (WIP)!
 
 This is an [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/) avalilable in differents Java, Scala and kafka versions, thanks to this you can select your most appropriate environment.
 
-There are many others [good jobs arround](#others-good-jobs) [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/), but its allow you to use the [Apache kafka examples in the same way that you see in its page](https://kafka.apache.org/documentation/#quickstart).
+There are many others [good jobs arround](#others-good-jobs) [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/), but it allow you to use the [Apache kafka examples in the same way that you see in its page](https://kafka.apache.org/documentation/#quickstart).
 
 # Tags
 
@@ -97,9 +103,48 @@ Depending on Java vendor and version, scala version and kafka version,  you have
 
 # Special Environments Variables
 
+## Configuration Parameters
+
+The most important value of this docker image is to be able to pass any [configuration parameter](https://kafka.apache.org/documentation/#configuration) as a special environment variable notation.
+
+for examples, if you want to modified or pass the configuration parameter `broker.id` and `compression.type` you only need to run your images like:
+
+```script
+docker run --tty --interactive --rm --name kafka \
+  --publish 9092:9092 \
+  --publish 2181:2181 \
+  --env SERVER__BROKER_ID=1 \
+  --env SERVER__COMPRESSION_TYPE=gzip \
+  christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
+```
+
+If additional you have an external zookeeper server called zk-01, then you need to pass `zookeeper.connect` also
+
+```script
+docker run --tty --interactive --rm \
+  --name kafka-01 \
+  --publish 9092:9092 \
+  --env SERVER__ZOOKEEPER_CONNECT=zk-01 \
+  --env SERVER__BROKER_ID=1 \
+  --env SERVER__COMPRESSION_TYPE=gzip \
+  --link zk-01 \
+  christiangda/kafka bin/kafka-server-start.sh config/server.properties
+```
+
+The provisioning script is enchange to convert:
+
+| --env VAR                       | Converted to | inside config/server.properties |
+| ------------------------------- | ------------ | ------------------------------- |
+| SERVER__ZOOKEEPER_CONNECT=zk-01 | -->          | zookeeper.connect=zk-01         |
+| SERVER__BROKER_ID=1             | -->          | broker.id=1                     |
+| SERVER__COMPRESSION_TYPE=gzip   | -->          | compression.type=gzip           |
+
+basically the rule is: put the prefix `SERVER__` and then get the [configuration parameter](https://kafka.apache.org/documentation/#configuration) name and replace `.` by `_` and put all letters in UPPER
+
 ## Java Heap
 
 By default kafka has `export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"`, if you want to change it pass to the docker env
+
 ```script
 --env KAFKA_HEAP_OPTS="-Xmx2G -Xms2G"
 ```

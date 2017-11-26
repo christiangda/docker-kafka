@@ -12,11 +12,3 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
-
-*/temp*
-*/*/temp*
-temp?
-
-*.md
-README-secret.md
-!README*.md
