@@ -7,7 +7,7 @@ KAFKA_SERVER_ENV_CONFIG_PREFIX="SERVER__"
 KAFKA_SERVER_CONFIG_FILE=${KAFKA_HOME}/config/server.properties
 
 ################################################################################
-# default values for files
+# default values for server file
 # if a var does not exist, define it and set de default value
 export SERVER__BROKER_ID=${SERVER__BROKER_ID:-0}
 export SERVER__NUM_NETWORK_THREADS=${SERVER__NUM_NETWORK_THREADS:-3}

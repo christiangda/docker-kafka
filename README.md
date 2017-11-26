@@ -192,6 +192,15 @@ docker build --no-cache --rm \
             --tag <your name>/kafka:latest .
 ```
 
+If you want to build kafka version >= 1.0.0 I recommend you use Java version 9
+```script
+docker build --no-cache --rm \
+            --build-arg JAVA_VERSION=9
+            --build-arg SCALA_VERSION=2.11 \
+            --build-arg KAFKA_VERSION=1.0.0 \
+            --tag <your name>/kafka:2.11-1.0.0 \
+            --tag <your name>/kafka:latest .
+```
 # Authors
 
 [Christian González](https://github.com/christiangda)
