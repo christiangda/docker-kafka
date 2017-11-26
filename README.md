@@ -10,6 +10,17 @@ Just another [Apache Kafka](https://kafka.apache.org) [docker image](https://doc
 
 [Github repo](https://github.com/christiangda/docker-kafka)
 
+## Impatients
+
+```
+docker pull christiangda/kafka
+
+docker run --tty --interactive --rm --name kafka \
+  --publish 9092:9092 \
+  --publish 2181:2181 \
+  christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
+```
+
 Docs: Work in Progress (WIP)!
 
 # Table of Contents
