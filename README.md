@@ -1,8 +1,13 @@
+[![Docker Pulls](https://img.shields.io/docker/pulls/christiangda/kafka.svg)](https://hub.docker.com/r/christiangda/kafka/)
+[![Docker Stars](https://img.shields.io/docker/stars/christiangda/kafka.svg)](https://hub.docker.com/r/christiangda/kafka/)
+[![](https://badge.imagelayers.io/christiangda/kafka:latest.svg)](https://imagelayers.io/?images=christiangda/kafka:latest)
+
 # docker-kafka
 
-Just another Apache Kafka docker image
+Just another [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/)
 
 [Dockerhub repo](https://hub.docker.com/r/christiangda/kafka/)
+
 [Github repo](https://github.com/christiangda/docker-kafka)
 
 Docs: Work in Progress (WIP)!
@@ -10,16 +15,52 @@ Docs: Work in Progress (WIP)!
 ### Table of Contents
 
 1. [Description - What the container does and why it is useful](#description)
-2. [Setup - The basics of getting started with this docker image](#setup)
+2. [Tags](tags)
+  * [Default Tags](#default-tags)
+  * [Available Tags](#available-tags)
+3. [Setup - The basics of getting started with this docker image](#setup)
     * [Setup requirements](#setup-requirements)
     * [Beginning with this Container](#beginning-with-this-container)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+4. [Usage - Configuration options and additional functionality](#usage)
+5. [Reference - ](#reference)
 6. [Development - Guide for contributing to the module](#development)
 7. [Authors - Who is contributing to does it](#authors)
 8. [License](#license)
 
 # Description
+
+This is an [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/) avalilable in differents Java, Scala and kafka versions, thanks to this you can select your most appropriate environment.
+
+There are many others [good jobs arround](#others-good-jobs) [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/), but its allow you to use the [Apache kafka examples in the same way that you see in its page](https://kafka.apache.org/documentation/#quickstart).
+
+# Tags
+
+Depending on Java vendor and version, scala version and kafka version,  you have many options to select
+
+## Default Tags
+
+* 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 1.0.0, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+
+## Available Tags
+
+1. Java OpenJDK 8
+  - Scala 2.10
+    * openjdk-8-2.10-0.10.2.1, 2.10-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+  - Scala 2.11
+    * openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.1 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-0.11.0.2, 2.11-0.11.0.2, 0.11.0.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+  - Scala 2.12
+    * openjdk-8-2.12-0.10.2.1, 2.12-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.12-0.11.0.2, 2.12-0.11.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+2. Java OpenJDK 9
+  - Scala 2.11
+    * openjdk-9-2.11-1.0.0, 2.11-1.0.0, 1.0.0 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+  - Scala 2.12
+    * openjdk-9-2.12-1.0.0, 2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 
 # Setup
 
@@ -178,29 +219,34 @@ To build this container, you can execute the following command
 ```script
 git clone https://github.com/christiangda/docker-kafka
 cd docker-kafka/
-docker build --no-cache --rm --tag <your name>/storm
+docker build --no-cache --rm --tag <your name>/kafka
 ```
 
-the parametrized's procedure is
+the parametrized procedure is
 ```script
 git clone https://github.com/christiangda/docker-kafka
 cd docker-kafka/
 docker build --no-cache --rm \
+            --build-arg CONTAINER_JAVA_VERSION=8 \
             --build-arg SCALA_VERSION=2.11 \
             --build-arg KAFKA_VERSION=0.11.0.1 \
-            --tag <your name>/kafka:2.11-0.11.0.1 \
-            --tag <your name>/kafka:latest .
+            --tag <your name>/kafka:2.11-0.11.0.1 .
 ```
 
 If you want to build kafka version >= 1.0.0 I recommend you use Java version 9
 ```script
 docker build --no-cache --rm \
-            --build-arg JAVA_VERSION=9
             --build-arg SCALA_VERSION=2.11 \
             --build-arg KAFKA_VERSION=1.0.0 \
             --tag <your name>/kafka:2.11-1.0.0 \
             --tag <your name>/kafka:latest .
 ```
+
+# Others good jobs
+
+* [wurstmeister/kafka](https://hub.docker.com/r/wurstmeister/kafka/)
+* [spotify/kafka](https://hub.docker.com/r/spotify/kafka/)
+
 # Authors
 
 [Christian González](https://github.com/christiangda)
