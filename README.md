@@ -18,6 +18,12 @@ Docs: Work in Progress (WIP)!
 2. [Tags](tags)
   * [Default Tags](#default-tags)
   * [Available Tags](#available-tags)
+3. [Exports](#exports)
+  * [Ports](#ports)
+  * [Volumes](#volumes)
+4. [Special Environments Variables](#special-evironments-variables)KAFKA_HEAP_OPTS
+  * [Java Heap](#java-heap)
+  * [Java JMX](#java-jmx)
 3. [Setup - The basics of getting started with this docker image](#setup)
     * [Setup requirements](#setup-requirements)
     * [Beginning with this Container](#beginning-with-this-container)
@@ -61,6 +67,38 @@ Depending on Java vendor and version, scala version and kafka version,  you have
     * openjdk-9-2.11-1.0.0, 2.11-1.0.0, 1.0.0 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.12
     * openjdk-9-2.12-1.0.0, 2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+
+# Exports
+
+## Ports
+
+* 9092 --> Default Kafka port, unmodifiable
+* 2181 --> Default Zookeeper port, unmodifiable
+* 9999 --> Java JMX port, unmodifiable
+
+## Volumes
+
+* /tmp --> Temporal files, Java JMX tmp default
+* /opt/kafka/config --> Default kafka config folder, kafka-[SCALA_VERSION]-[KAFKA_VERSION]/config
+* /opt/kafka/logs --> Default Kafka data folder
+* /opt/kafka/zookeeper/data --> Default Zookeeper data
+* /opt/kafka/zookeeper/logs --> Default Zookeeper logs
+
+# Special Environments Variables
+
+## Java Heap
+
+By default kafka has `export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"`, if you want to change it pass to the docker env
+```script
+--env KAFKA_HEAP_OPTS="-Xmx2G -Xms2G"
+```
+if you want to change
+
+## Java JMX
+
+```script
+--env EXTRA_ARGS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=9999"
+```
 
 # Setup
 
