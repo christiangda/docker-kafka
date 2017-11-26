@@ -12,7 +12,7 @@ Just another [Apache Kafka](https://kafka.apache.org) [docker image](https://doc
 
 Docs: Work in Progress (WIP)!
 
-### Table of Contents
+# Table of Contents
 
 1. [Description - What the container does and why it is useful](#description)
 2. [Tags](tags)
@@ -21,7 +21,7 @@ Docs: Work in Progress (WIP)!
 3. [Exports](#exports)
     - [Ports](#ports)
     - [Volumes](#volumes)
-4. [Special Environments Variables](#special-evironments-variables)KAFKA_HEAP_OPTS
+4. [Special Environments Variables](#special-evironments-variables)
     - [Java Heap](#java-heap)
     - [Java JMX](#java-jmx)
 5. [Setup - The basics of getting started with this docker image](#setup)
