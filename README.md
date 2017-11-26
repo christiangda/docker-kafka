@@ -340,6 +340,7 @@ docker build --no-cache --rm \
 
 * [wurstmeister/kafka](https://hub.docker.com/r/wurstmeister/kafka/)
 * [spotify/kafka](https://hub.docker.com/r/spotify/kafka/)
+* [confluent/kafka](https://hub.docker.com/r/confluent/kafka/)
 
 # Authors
 
