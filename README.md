@@ -350,7 +350,7 @@ docker build --no-cache --rm \
 
 # Authors
 
-[Christian González](https://github.com/christiangda)
+[Christian González Di Antonio](https://github.com/christiangda)
 
 
 ## License
