@@ -62,7 +62,7 @@ Depending on Java vendor and version, scala version and kafka version,  you have
 
 ## Default Tags
 
-* 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](docs/builds.md "openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.1 (Default)")
 * 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 * 1.0.0, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 
