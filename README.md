@@ -22,7 +22,7 @@ docker run --tty --interactive --rm --name kafka \
   christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
 ```
 
-special first argument `WITH_INTERNAL_ZOOKEEPER` **is necessary to start internal** [Zookeeper Server](https://zookeeper.apache.org/) server, **this configuration is not recommended for production environments!**. For **production environments** you could use [Zookeeper OFFICIAL REPOSITORY](https://hub.docker.com/r/_/zookeeper/)
+special first argument **`WITH_INTERNAL_ZOOKEEPER` is necessary to start internal** [Zookeeper Server](https://zookeeper.apache.org/) server, **this configuration is not recommended for production environments!**. For **production environments** you could use [Zookeeper OFFICIAL REPOSITORY](https://hub.docker.com/r/_/zookeeper/)
 
 **For advanced configurations continue reading the documentation!.**
 
@@ -131,15 +131,19 @@ docker run --tty --interactive --rm \
   christiangda/kafka bin/kafka-server-start.sh config/server.properties
 ```
 
-The provisioning script is enchange to convert:
+The provisioning script is encharge to convert:
 
 | --env VAR                       | Converted to | inside config/server.properties |
 | ------------------------------- | ------------ | ------------------------------- |
-| SERVER__ZOOKEEPER_CONNECT=zk-01 | -->          | zookeeper.connect=zk-01         |
-| SERVER__BROKER_ID=1             | -->          | broker.id=1                     |
-| SERVER__COMPRESSION_TYPE=gzip   | -->          | compression.type=gzip           |
+| SERVER__ZOOKEEPER_CONNECT=zk-01 |     -->      | zookeeper.connect=zk-01         |
+| SERVER__BROKER_ID=1             |     -->      | broker.id=1                     |
+| SERVER__COMPRESSION_TYPE=gzip   |     -->      | compression.type=gzip           |
+| ...                             |     -->      | ...                             |
+| SERVER__SOME_KEY=some value     |     -->      | some.key=some value             |
 
-basically the rule is: put the prefix `SERVER__` and then get the [configuration parameter](https://kafka.apache.org/documentation/#configuration) name and replace `.` by `_` and put all letters in UPPER
+basically the rule is:
+
+put the prefix `SERVER__` and then get the [configuration parameter](https://kafka.apache.org/documentation/#configuration) name and replace `.` by `_` and put all letters in UPPER
 
 ## Java Heap
 
@@ -160,7 +164,7 @@ if you want to change
 
 ## Setup Requirements
 
-Download
+Download the image
 
 ```bash
 docker pull christiangda/kafka
@@ -215,7 +219,7 @@ docker run --tty --interactive --rm \
   christiangda/kafka bin/kafka-console-producer.sh --broker-list kafka:9092 --topic test
 
 docker run --tty --interactive --rm \
-  --name client \
+  --name client2 \
   --link kafka \
   christiangda/kafka bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic test --from-beginning
 ```
