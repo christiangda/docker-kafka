@@ -3,24 +3,82 @@ services:
 
   zk-01:
     image: zookeeper
+    hostname: zk-01
     ports:
       - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
     networks:
       - kafka-net
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zk-01:2888:3888 server.2=zk-02:2889:3889 server.3=zk-03:2890:3890
+    # volumes:
+    #   - /zookeeper/01/data:/data
+    #   - /zookeeper/01/datalog:/datalog
     deploy:
       resources:
         limits:
           cpus: "0.1"
-          memory: 1024M
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+
+  zk-02:
+    image: zookeeper
+    hostname: zk-02
+    ports:
+      - "2182:2181"
+      - "2889:2889"
+      - "3889:3889"
+    networks:
+      - kafka-net
+    environment:
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zk-01:2888:3888 server.2=zk-02:2889:3889 server.3=zk-03:2890:3890
+    # volumes:
+    #   - /zookeeper/02/data:/data
+    #   - /zookeeper/02/datalog:/datalog
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+
+  zk-03:
+    image: zookeeper
+    hostname: zk-03
+    ports:
+      - "2183:2181"
+      - "2890:2890"
+      - "3890:3890"
+    networks:
+      - kafka-net
+    environment:
+      - ZOO_MY_ID=3
+      - ZOO_SERVERS=server.1=zk-01:2888:3888 server.2=zk-02:2889:3889 server.3=zk-03:2890:3890
+    # volumes:
+    #   - /zookeeper/03/data:/data
+    #   - /zookeeper/03/datalog:/datalog
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 256M
       restart_policy:
         condition: on-failure
 
   kafka-01:
-    image: christiangda/kafka:2.11-0.11.0.1
+    image: christiangda/kafka:1.0.0
+    hostname: kafka-01
     depends_on:
       - zk-01
+      - zk-02
+      - zk-03
     environment:
-      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181,zk-02:2182,zk-03:2183
       - SERVER__ZOOKEEPER_CONNECTION_TIMEOUT_MS=10000
       - SERVER__BROKER_ID=-1
     ports:
@@ -30,17 +88,20 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: 1024M
+          cpus: "0.2"
+          memory: 256M
       restart_policy:
         condition: on-failure
 
   kafka-02:
-    image: christiangda/kafka:2.11-0.11.0.1
+    image: christiangda/kafka:1.0.0
+    hostname: kafka-02
     depends_on:
       - zk-01
+      - zk-02
+      - zk-03
     environment:
-      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181
+      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181,zk-02:2182,zk-03:2183
       - SERVER__ZOOKEEPER_CONNECTION_TIMEOUT_MS=10000
       - SERVER__BROKER_ID=-1
     ports:
@@ -50,23 +111,45 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: 1024M
+          cpus: "0.2"
+          memory: 256M
       restart_policy:
         condition: on-failure
 
-  edge-node:
-    image: christiangda/kafka:2.11-0.11.0.1
+  kafka-03:
+    image: christiangda/kafka:1.0.0
+    hostname: kafka-03
     depends_on:
       - zk-01
+      - zk-02
+      - zk-03
+    environment:
+      - SERVER__ZOOKEEPER_CONNECT=zk-01:2181,zk-02:2182,zk-03:2183
+      - SERVER__ZOOKEEPER_CONNECTION_TIMEOUT_MS=10000
+      - SERVER__BROKER_ID=-1
+    ports:
+      - "9094:9092"
     networks:
       - kafka-net
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: 1024M
+          cpus: "0.2"
+          memory: 256M
       restart_policy:
         condition: on-failure
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - kafka-net
+
 networks:
   kafka-net:
