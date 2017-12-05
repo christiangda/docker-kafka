@@ -85,8 +85,8 @@ docker service logs kafka-cluster_zk-02
 docker service logs kafka-cluster_zk-03
 ```
 
-```
-```
+## Docker Swarm visualizer
 
-```
-```
+Enter to: `http://192.168.99.100:8080/` and you will see something like this:
+
+![Kafka cluster in Docker Swarm Cluster](https://github.com/christiangda/docker-kafka/blob/master/docs/imgs/swarm-kafka-cluster.png)
