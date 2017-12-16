@@ -6,8 +6,8 @@ services:
     hostname: zk-01
     ports:
       - "2181:2181"
-      - "2888:2888"
-      - "3888:3888"
+      # - "2888:2888"
+      # - "3888:3888"
     networks:
       - kafka-net
     environment:
@@ -29,8 +29,8 @@ services:
     hostname: zk-02
     ports:
       - "2182:2181"
-      - "2889:2889"
-      - "3889:3889"
+      # - "2889:2889"
+      # - "3889:3889"
     networks:
       - kafka-net
     environment:
@@ -52,8 +52,8 @@ services:
     hostname: zk-03
     ports:
       - "2183:2181"
-      - "2890:2890"
-      - "3890:3890"
+      # - "2890:2890"
+      # - "3890:3890"
     networks:
       - kafka-net
     environment:

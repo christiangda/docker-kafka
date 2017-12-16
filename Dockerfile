@@ -10,11 +10,14 @@ ARG KAFKA_VERSION
 ENV SCALA_VERSION=${SCALA_VERSION:-2.11} \
     KAFKA_VERSION=${KAFKA_VERSION:-1.0.0} \
     KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-"https://dist.apache.org/repos/dist/release/kafka"} \
+    KAFKA_USER="kafka" \
+    KAFKA_GROUP="kafka" \
     KAFKA_HOME="/opt/kafka" \
     INTERNAL_KAFKA_LOG_DIRS="/opt/kafka/logs" \
     INTERNAL_KAFKA_PORT=9092 \
     INTERNAL_KAFKA_JMX_PORT=9999 \
     INTERNAL_ZOOKEEPER_PORT=2181 \
+    INTERNAL_KAFKA_CONFIG_PATH="/opt/kafka/config" \
     INTERNAL_ZOOKEEPER_LOGS_PATH="/opt/kafka/zookeeper/logs" \
     INTERNAL_ZOOKEEPER_DATA_PATH="/opt/kafka/zookeeper/data" \
     DEBIAN_FRONTEND=noninteractive
@@ -32,9 +35,9 @@ LABEL maintainer="Christian González Di Antonio <christiangda@gmail.com>" \
       org.opencontainers.image.description="Just another Apache Kafka docker image"
 
 # Create service's user
-RUN addgroup --gid 1000 kafka \
+RUN addgroup --gid 1000 ${KAFKA_GROUP} \
     && mkdir -p ${KAFKA_HOME}/bin \
-    && adduser --uid 1000 --no-create-home --system  --home ${KAFKA_HOME} --shell /sbin/nologin --ingroup kafka --gecos "Kafka User" kafka \
+    && adduser --uid 1000 --no-create-home --system  --home ${KAFKA_HOME} --shell /sbin/nologin --ingroup ${KAFKA_GROUP} --gecos "Kafka User" ${KAFKA_USER} \
     && chmod 755 ${KAFKA_HOME} \
     && mkdir -p ${INTERNAL_KAFKA_LOG_DIRS} \
     && mkdir -p ${INTERNAL_ZOOKEEPER_LOGS_PATH} \
@@ -69,10 +72,10 @@ ENV PATH=$KAFKA_HOME/bin:$PATH
 # Exposed ports
 EXPOSE ${INTERNAL_KAFKA_PORT} ${INTERNAL_ZOOKEEPER_PORT} ${INTERNAL_KAFKA_JMX_PORT}
 
-VOLUME ["/tmp", "/opt/kafka/config", "/opt/kafka/logs", "/opt/kafka/zookeeper/data", "/opt/kafka/zookeeper/logs"]
+VOLUME "/tmp" ${INTERNAL_KAFKA_CONFIG_PATH} ${INTERNAL_KAFKA_LOG_DIRS} ${INTERNAL_ZOOKEEPER_DATA_PATH} ${INTERNAL_ZOOKEEPER_LOGS_PATH}
 
-USER kafka
-WORKDIR /opt/kafka
+USER ${KAFKA_USER}
+WORKDIR ${KAFKA_HOME}
 
 # Force any command provision the container
 ENTRYPOINT ["provisioning/docker-entrypoint.sh"]

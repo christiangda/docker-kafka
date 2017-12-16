@@ -26,20 +26,20 @@ docker-machine ssh myvm1 "docker swarm init --advertise-addr <myvm1 ip>"
 ### Create Swarm master node
 ```
 docker-machine ssh manager-01 "docker swarm init --advertise-addr $(docker-machine ip manager-01)"
-Swarm initialized: current node (2gbk0ytspr6nfb5xrjy9jjj8f) is now a manager.
+Swarm initialized: current node (zby7j1erqmgzjyvnf8kda5nrc) is now a manager.
 
 To add a worker to this swarm, run the following command:
 
-    docker swarm join --token SWMTKN-1-1l7edmjhizu5f7o595yvns7357v1h5e8rm64d03koos5kfqba5-5u31ra07ru2wqouulm63ttnqd 192.168.99.100:2377
+    docker swarm join --token SWMTKN-1-4wnwin0w51gx8zbqnqiebeb3onu4nubzb29ko6oir17qktr81i-1hspuo6eakfbnqmtsjaese4yn 192.168.99.100:2377
 
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
 ### Add additional nodes
 ```
-docker-machine ssh worker-01 "docker swarm join --token SWMTKN-1-1l7edmjhizu5f7o595yvns7357v1h5e8rm64d03koos5kfqba5-5u31ra07ru2wqouulm63ttnqd 192.168.99.100:2377"
-docker-machine ssh worker-02 "docker swarm join --token SWMTKN-1-1l7edmjhizu5f7o595yvns7357v1h5e8rm64d03koos5kfqba5-5u31ra07ru2wqouulm63ttnqd 192.168.99.100:2377"
-docker-machine ssh worker-03 "docker swarm join --token SWMTKN-1-1l7edmjhizu5f7o595yvns7357v1h5e8rm64d03koos5kfqba5-5u31ra07ru2wqouulm63ttnqd 192.168.99.100:2377"
+docker-machine ssh worker-01 "docker swarm join --token SWMTKN-1-4wnwin0w51gx8zbqnqiebeb3onu4nubzb29ko6oir17qktr81i-1hspuo6eakfbnqmtsjaese4yn 192.168.99.100:2377"
+docker-machine ssh worker-02 "docker swarm join --token SWMTKN-1-4wnwin0w51gx8zbqnqiebeb3onu4nubzb29ko6oir17qktr81i-1hspuo6eakfbnqmtsjaese4yn 192.168.99.100:2377"
+docker-machine ssh worker-03 "docker swarm join --token SWMTKN-1-4wnwin0w51gx8zbqnqiebeb3onu4nubzb29ko6oir17qktr81i-1hspuo6eakfbnqmtsjaese4yn 192.168.99.100:2377"
 ```
 
 Verify the swarm cluster
@@ -79,10 +79,21 @@ docker stack ps kafka-cluster
 watch docker stack ps kafka-cluster
 ```
 
+See containers logs
+
 ```
 docker service logs kafka-cluster_zk-01
-docker service logs kafka-cluster_zk-02
-docker service logs kafka-cluster_zk-03
+docker service logs kafka-cluster_zk-01
+docker service logs kafka-cluster_zk-01
+docker service logs kafka-cluster_kafka-01
+docker service logs kafka-cluster_kafka-02
+docker service logs kafka-cluster_kafka-03
+```
+
+### Using a container to connect as a kafka client
+```
+docker service create --replicas 1 --name kafka-client  --network kafka-cluster_kafka-net christiangda/kafka:1.0.0 sleep 3600
+docker service ps kafka-client
 ```
 
 ## Docker Swarm visualizer

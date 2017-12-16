@@ -182,6 +182,12 @@ docker run --tty --interactive --rm \
 
 # Usage
 
+## Using Docker Compose, Docker Machine and Docker Swarm
+
+See the [docker compose file here](https://github.com/christiangda/docker-kafka/blob/master/docker-compose.yml)
+
+See the procedure with [Docker machine](https://docs.docker.com/machine/) [here](https://github.com/christiangda/docker-kafka/blob/master/docs/docker-machine_docker-swarm.md)
+
 ## Using its internal Apache Zookeeper
 
 ```bash
