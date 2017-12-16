@@ -51,7 +51,11 @@ RUN chmod +x ${KAFKA_HOME}/provisioning/*.sh
 
 # install neccesary packages and kafka
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    wget gnupg ca-certificates krb5-user libterm-readline-gnu-perl \
+    wget \
+    gnupg \
+    ca-certificates \
+    krb5-user \
+    libterm-readline-gnu-perl \
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz" \
     && wget -q https://kafka.apache.org/KEYS \
     && wget -q "${KAFKA_DOWNLOAD_MIRROR}/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz.asc" \
