@@ -13,6 +13,8 @@ Just another [Apache Kafka](https://kafka.apache.org) [docker image](https://doc
 
 ## Impatients
 
+Running it using its internal zookeeper server
+
 ```
 docker pull christiangda/kafka
 
@@ -22,11 +24,13 @@ docker run --tty --interactive --rm --name kafka \
   christiangda/kafka WITH_INTERNAL_ZOOKEEPER bin/kafka-server-start.sh config/server.properties
 ```
 
-special first argument **`WITH_INTERNAL_ZOOKEEPER` is necessary to start internal** [Zookeeper Server](https://zookeeper.apache.org/) server, **this configuration is not recommended for production environments!**. For **production environments** you could use [Zookeeper OFFICIAL REPOSITORY](https://hub.docker.com/r/_/zookeeper/)
+Special first argument **`WITH_INTERNAL_ZOOKEEPER` is necessary to start internal** [Zookeeper's Server](https://zookeeper.apache.org/) server, **this configuration is not recommended for production environments!**. 
+
+For **production environments**, you could use [Zookeeper's OFFICIAL REPOSITORY](https://hub.docker.com/r/_/zookeeper/)
 
 **For advanced configurations continue reading the documentation!.**
 
-**Docs: Work in Progress (WIP)!**
+**Work in Progress (WIP)!**
 
 # Table of Contents
 
@@ -52,13 +56,13 @@ special first argument **`WITH_INTERNAL_ZOOKEEPER` is necessary to start interna
 
 # Description
 
-This is an [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/) avalilable in differents Java, Scala and kafka versions, thanks to this you can select your most appropriate environment.
+This is a [docker's image](https://docs.docker.com/engine/reference/commandline/images/) available in different Java, Scala and Kafka versions, thanks to this you can select your best flavor for the most appropriate environment.
 
-There are many others [good jobs arround](#others-good-jobs) [Apache Kafka](https://kafka.apache.org) [docker image](https://docs.docker.com/engine/reference/commandline/images/), but it allow you to use the [Apache kafka examples in the same way that you see in its page](https://kafka.apache.org/documentation/#quickstart).
+There are many others [good jobs arround](#others-good-jobs) around [Apache Kafka](https://kafka.apache.org) [docker's image](https://docs.docker.com/engine/reference/commandline/images/), but it allows you to use the [Apache kafka examples in the same way that you see in its page](https://kafka.apache.org/documentation/#quickstart).
 
 # Tags
 
-Depending on Java vendor and version, scala version and kafka version,  you have many options to select
+Depending on Java vendor and version, scala version and Kafka version,  you have many options to select
 
 ## Default Tags
 
@@ -90,7 +94,7 @@ Depending on Java vendor and version, scala version and kafka version,  you have
 ## Ports
 
 * 9092 --> Default Kafka port, unmodifiable
-* 2181 --> Default Zookeeper port, unmodifiable
+* 2181 --> Default Zookeeper port, unmodifiable (Only available in case you are using its internal zookeeper server)
 * 9999 --> Java JMX port, unmodifiable
 
 ## Volumes
@@ -107,7 +111,7 @@ Depending on Java vendor and version, scala version and kafka version,  you have
 
 The most important value of this docker image is to be able to pass any [configuration parameter](https://kafka.apache.org/documentation/#configuration) as a special environment variable notation.
 
-for examples, if you want to modified or pass the configuration parameter `broker.id` and `compression.type` you only need to run your images like:
+for examples, if you want to modify or pass the configuration parameter `broker.id` and `compression.type` you only need to run your images like:
 
 ```script
 docker run --tty --interactive --rm --name kafka \
