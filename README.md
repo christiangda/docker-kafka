@@ -68,7 +68,7 @@ Depending on Java vendor and version, scala version and Kafka version,  you have
 
 * 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
 * 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-* 1.0.0, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+* 1.0.1, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
 
 ## Available Tags
 
