@@ -9,7 +9,7 @@ ARG KAFKA_VERSION
 # Environment variables
 ENV SCALA_VERSION=${SCALA_VERSION:-2.11} \
     KAFKA_VERSION=${KAFKA_VERSION:-1.0.0} \
-    KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-"https://dist.apache.org/repos/dist/release/kafka"} \
+    KAFKA_DOWNLOAD_MIRROR=${KAFKA_DOWNLOAD_MIRROR:-https://dist.apache.org/repos/dist/release/kafka} \
     KAFKA_USER="kafka" \
     KAFKA_GROUP="kafka" \
     KAFKA_HOME="/opt/kafka" \
