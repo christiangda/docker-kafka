@@ -85,12 +85,14 @@ Depending on Java vendor and version, scala version and Kafka version,  you have
     * openjdk-8-2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 2. Java OpenJDK 9
   - Scala 2.11
-    * openjdk-9-2.11-1.1.1, 2.11-1.1.1, 1.1.1 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)  
+    * openjdk-9-2.11-2.0.0, 2.11-2.0.0, 2.0.0 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)  
+    * openjdk-9-2.11-1.1.1, 2.11-1.1.1, 1.1.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)  
     * openjdk-9-2.11-1.1.0, 2.11-1.1.0, 1.1.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)  
     * openjdk-9-2.11-1.0.2, 2.11-1.0.2, 1.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-9-2.11-1.0.1, 2.11-1.0.1, 1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-9-2.11-1.0.0, 2.11-1.0.0, 1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.12
+    * openjdk-9-2.12-2.0.0, 2.12-2.0.0  [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-9-2.12-1.1.1, 2.12-1.1.1  [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-9-2.12-1.1.0, 2.12-1.1.0  [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-9-2.12-1.0.2, 2.12-1.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)

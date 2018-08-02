@@ -71,7 +71,7 @@ services:
         condition: on-failure
 
   kafka-01:
-    image: christiangda/kafka:1.0.1
+    image: christiangda/kafka
     hostname: kafka-01
     depends_on:
       - zk-01
@@ -94,7 +94,7 @@ services:
         condition: on-failure
 
   kafka-02:
-    image: christiangda/kafka:1.0.1
+    image: christiangda/kafka
     hostname: kafka-02
     depends_on:
       - zk-01
@@ -117,7 +117,7 @@ services:
         condition: on-failure
 
   kafka-03:
-    image: christiangda/kafka:1.0.1
+    image: christiangda/kafka
     hostname: kafka-03
     depends_on:
       - zk-01
