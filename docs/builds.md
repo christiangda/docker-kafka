@@ -236,7 +236,7 @@ docker push christiangda/kafka:openjdk-9-2.12-1.0.2
 docker push christiangda/kafka:2.12-1.0.2
 ```
 
-## Tags: openjdk-9-2.11-1.0.2, 2.11-1.0.2, 1.0.2 (Default)
+## Tags: openjdk-9-2.11-1.0.2, 2.11-1.0.2, 1.0.2
 
 ```script
 docker build --no-cache --rm \
@@ -278,7 +278,7 @@ docker push christiangda/kafka:openjdk-9-2.12-1.1.0
 docker push christiangda/kafka:2.12-1.1.0
 ```
 
-## Tags: openjdk-9-2.11-1.1.0, 2.11-1.1.0, 1.1.0 (Default)
+## Tags: openjdk-9-2.11-1.1.0, 2.11-1.1.0, 1.1.0
 
 ```script
 docker build --no-cache --rm \
