@@ -68,7 +68,7 @@ Depending on Java vendor and version, scala version and Kafka version,  you have
 
 * 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
 * 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-* 1.0.1, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+* 1.0.2, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
 
 ## Available Tags
 
@@ -85,7 +85,8 @@ Depending on Java vendor and version, scala version and Kafka version,  you have
     * openjdk-8-2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
 2. Java OpenJDK 9
   - Scala 2.11
-    * openjdk-9-2.11-1.0.1, 2.11-1.0.1, 1.0.1 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-9-2.11-1.0.2, 2.11-1.0.2, 1.0.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-9-2.11-1.0.1, 2.11-1.0.1, 1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
     * openjdk-9-2.11-1.0.0, 2.11-1.0.0, 1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
   - Scala 2.12
     * openjdk-9-2.12-1.0.1, 2.12-1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
