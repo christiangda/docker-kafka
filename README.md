@@ -66,31 +66,34 @@ Depending on Java vendor and version, scala version and Kafka version,  you have
 
 ## Default Tags
 
-* 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-* 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-* 1.0.2, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+* 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 1.0.2, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 
 ## Available Tags
 
 1. Java OpenJDK 8
   - Scala 2.10
-    * openjdk-8-2.10-0.10.2.1, 2.10-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-8-2.10-0.10.2.1, 2.10-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.11
-    * openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.1 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-8-2.11-0.11.0.2, 2.11-0.11.0.2, 0.11.0.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-8-2.11-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.1 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-0.11.0.2, 2.11-0.11.0.2, 0.11.0.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.12
-    * openjdk-8-2.12-0.10.2.1, 2.12-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-8-2.12-0.11.0.2, 2.12-0.11.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-8-2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-8-2.12-0.10.2.1, 2.12-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.12-0.11.0.2, 2.12-0.11.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 2. Java OpenJDK 9
   - Scala 2.11
-    * openjdk-9-2.11-1.0.2, 2.11-1.0.2, 1.0.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-9-2.11-1.0.1, 2.11-1.0.1, 1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-9-2.11-1.0.0, 2.11-1.0.0, 1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-9-2.11-1.1.0, 2.11-1.1.0, 1.1.0 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)  
+    * openjdk-9-2.11-1.0.2, 2.11-1.0.2, 1.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-9-2.11-1.0.1, 2.11-1.0.1, 1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-9-2.11-1.0.0, 2.11-1.0.0, 1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.12
-    * openjdk-9-2.12-1.0.1, 2.12-1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
-    * openjdk-9-2.12-1.0.0, 2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile) --> [Build Procedure](https://github.com/christiangda/docker-kafka/blob/master/docs/builds.md)
+    * openjdk-9-2.12-1.1.0, 2.12-1.1.0  [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-9-2.12-1.0.2, 2.12-1.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-9-2.12-1.0.1, 2.12-1.0.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-9-2.12-1.0.0, 2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 
 # Exports
 
