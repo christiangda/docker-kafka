@@ -62,27 +62,32 @@ There are many others [good jobs arround](#others-good-jobs) around [Apache Kafk
 
 # Tags
 
-Depending on Java vendor and version, scala version and Kafka version,  you have many options to select
+Depending on Java, scala and Kafka version,  you have many options to select
 
-## Default Tags
+## Lastest Version Tags
 
-* 0.10.2.1 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
-* 0.11.0.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 0.10.2.2 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+* 0.11.0.3 (Java OpenJDK 8, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 * 1.1.1, (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 * 1.0.2, (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 * 2.0.0, latest (Java OpenJDK 9, Scala 2.11) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 
-## Available Tags
+## All Available Tags
 
 1. Java OpenJDK 8
   - Scala 2.10
+    * openjdk-8-2.10-0.10.2.1, 2.10-0.10.2.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-8-2.10-0.10.2.1, 2.10-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.11
-    * openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.1 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
-    * openjdk-8-2.11-0.11.0.2, 2.11-0.11.0.2, 0.11.0.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.2 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-0.10.2.1, 2.11-0.10.2.1, 0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-0.11.0.2, 2.11-0.11.0.3, 0.11.0.3 (Default) [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.11-0.11.0.2, 2.11-0.11.0.2, 0.11.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-8-2.11-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
   - Scala 2.12
+    * openjdk-8-2.12-0.10.2.1, 2.12-0.10.2.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-8-2.12-0.10.2.1, 2.12-0.10.2.1 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
+    * openjdk-8-2.12-0.11.0.2, 2.12-0.11.0.3 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-8-2.12-0.11.0.2, 2.12-0.11.0.2 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
     * openjdk-8-2.12-1.0.0 [Dockerfile](https://raw.githubusercontent.com/christiangda/docker-kafka/master/Dockerfile)
 2. Java OpenJDK 9
@@ -125,7 +130,7 @@ The most important value of this docker image is to be able to pass any [configu
 
 for examples, if you want to modify or pass the configuration parameter `broker.id` and `compression.type` you only need to run your images like:
 
-```script
+```
 docker run --tty --interactive --rm --name kafka \
   --publish 9092:9092 \
   --publish 2181:2181 \
@@ -136,7 +141,7 @@ docker run --tty --interactive --rm --name kafka \
 
 If additional you have an external zookeeper server called zk-01, then you need to pass `zookeeper.connect` also
 
-```script
+```
 docker run --tty --interactive --rm \
   --name kafka-01 \
   --publish 9092:9092 \
@@ -165,14 +170,14 @@ put the prefix `SERVER__` and then get the [configuration parameter](https://kaf
 
 By default kafka has `export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"`, if you want to change it pass to the docker env
 
-```script
+```
 --env KAFKA_HEAP_OPTS="-Xmx2G -Xms2G"
 ```
 if you want to change
 
 ## Java JMX
 
-```script
+```
 --env EXTRA_ARGS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=9999"
 ```
 
@@ -338,14 +343,14 @@ chagest and prepare a git pull request
 
 To build this container, you can execute the following command
 
-```script
+```
 git clone https://github.com/christiangda/docker-kafka
 cd docker-kafka/
 docker build --no-cache --rm --tag <your name>/kafka
 ```
 
 the parametrized procedure is
-```script
+```
 git clone https://github.com/christiangda/docker-kafka
 cd docker-kafka/
 docker build --no-cache --rm \
@@ -356,7 +361,7 @@ docker build --no-cache --rm \
 ```
 
 If you want to build kafka version >= 1.0.0 I recommend you use Java version 9
-```script
+```
 docker build --no-cache --rm \
             --build-arg SCALA_VERSION=2.11 \
             --build-arg KAFKA_VERSION=1.0.1 \
